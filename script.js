@@ -28,7 +28,7 @@ function loadData() {
     }
 }
 
-// 导出数据为 TXT 文件
+// 导出数据并显示在页面上
 function exportData() {
     const savedData = localStorage.getItem('characterData');
     if (savedData) {
@@ -40,15 +40,12 @@ function exportData() {
             txtContent += `${key}: ${data[key]}\n`;
         }
 
-        // 创建 Blob 并下载
-        const blob = new Blob([txtContent], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'character_sheet.txt';
-        a.click();
-        URL.revokeObjectURL(url);
-        alert('角色数据已导出为 TXT 文件！');
+        // 显示文本内容
+        const outputDiv = document.createElement('div');
+        outputDiv.style.whiteSpace = 'pre-wrap'; // 保留换行符
+        outputDiv.textContent = txtContent;
+        document.body.appendChild(outputDiv);
+        alert('角色数据已显示在页面上，请手动复制！');
     } else {
         alert('没有保存的角色数据！');
     }
